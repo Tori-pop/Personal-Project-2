@@ -1,5 +1,20 @@
-I've installed both github anf git
+I've installed both github and git
 I stared a couple projects and I am now watching a few really interesting repositories.
+
+     "Stage your changes to prepare for committing them:
+     git add <files>
+     After editing some files, this command will mark any changes you’ve made as “staged” (or “ready to be committed”).
+     If you then go and make more changes, those new changes will not automatically be staged,
+     even if you’ve changed the same files as before. This is useful for controlling exactly what you commit,
+     but also a major source of confusion for newcomers.
+     If you’re ever unsure, just type git status again to see what’s going on. You’ll see “Changes to be committed:” 
+     followed by file names in green. Below that you’ll see “Changes not staged for commit:” followed by file names in red.
+     These are not yet staged.
+     As a shortcut, you can use wildcards just like with any other terminal command. For example:
+     git add README.md app/*.txt
+     This will add the file README.md, as well as every file in the app folder that ends in .txt.
+     Typically you can just type git add --all to add everything that’s changed."
+https://hackernoon.com/understanding-git-fcffd87c15a3
 
 Command in git that I've memorized 
      $ git status - Lists all new or modified files to be committed
@@ -28,3 +43,53 @@ Command in git that I've memorized
 I figured out how to use "Atom" with git as if I were a real programmer
 I also have been usaling push and pull
 
+
+
+I have spennt an hour going through "insights" and figuring out what all of it means.
+I now know what "clone or download" means and how to use it
+     When you clone you get a copy of the history and it is a functional git repo. 
+     Downloading a repository just downloads the files from the most recent commit of the default branch. 
+     It doesn't download any of the files in the .git folder.
+     
+You can use the -m flag as a shortcut to write a message. For example:
+git commit -m “Add a new feature”
+Push your branch to upload it somewhere else:
+git push origin <branch-name>
+This will upload your branch to the remote named origin (remember, that’s the URL defined initially during clone).
+After a successful push, your teammates will then be able to pull your branch to view your commits (see git pull below).
+As a shortcut, you can type the word HEAD instead of branch-name to automatically use the branch you’re currently on.
+HEAD always refers to your latest checkpoint, that is, the latest commit on your current branch.
+As mentioned earlier, everything in git can be thought of as a checkpoint. Here’s a list of the 
+types of checkpoint you know about now (again, these are technically called “references” and “revisions”):
+HEAD
+<branch-name>, e.g. master
+<commit-hash>, e.g. e093542d01d11c917c316bfaffd6c4e5633aba58 (or e093542 for short)
+There’s also:
+<tag-name>, e.g. v1.0.0
+stash
+Finally, special characters like ^, ~, and @{} can be used to modify references. They're quite useful; learn more here.
+Fetch the latest info about a repo:
+git fetch
+This will download the latest info about the repo from origin (such as all the different branches stored on GitHub).
+It doesn’t change any of your local files — just updates the tracking data stored in the .git folder.
+Merge in changes from somebody else:
+git merge <other-branch-name>
+This will take all commits that exist on the other-branch-name branch and integrate them into your own current branch.
+This uses whatever branch data is stored locally, so make sure you’ve run git fetch first to download the latest info.
+For example, if someone else adds a few commits to the master branch of origin, you can do the following to download 
+their changes and update your own local master branch:
+git checkout master      # Make sure you're on the right branch.
+git fetch                # Download any new info from origin.
+git merge origin/master  # Merge the 'origin/master' branch
+into your current branch.
+The name origin/master here literally means the origin/master checkpoint on your computer. Git uses this
+notation to differentiate branches of the same name (e.g. master) located in different places (e.g. your own 
+branches vs. origin's branches).
+As a shortcut, you can use the pull command to both fetch and merge all in one step. This is more common 
+than merging manually like above:
+git pull origin master
+Here we separate the words origin and master (without a slash like above). We don't want to use the origin/master 
+checkpoint on our own computer, because that's stored offline and is probably out of date. We instead want to fetch
+directly from the master branch of the remote endpoint called origin. Keep an eye out; the difference is important!
+For a deeper understanding of how merging works and how conflicts are resolved (with fun pictures and graphs), 
+see the official merge docs. This will also be covered extensively in part 3 of this series.
