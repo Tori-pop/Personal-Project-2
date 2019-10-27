@@ -3,7 +3,39 @@ What I learned for week 4 through 6
 THis is a list of things that I learned in all the videos I watched from week 4-6.
     Remote vs local repositories
 #    
-#  these lines are being typed in a seperet branch
+#  these lines are being typed in a new branch
 #  I will create a pull request
 #  Then merge it with the master branch
 #
+
+I've gone tyhrough and studied https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
+
+    Fork
+    The last important network indicator of a project is the number of forks.
+    This is key to how GitHub works, as a fork is the base of a Pull Request (PR), a change proposal. Starting from your repository,
+    a person forks it, makes some changes, then creates a PR to ask you to merge those changes.
+    Sometimes the person that forks never asks you to merge anything, just because they liked your code and decided to 
+    add something on top of it, or they fixed some bug they were experiencing.
+    A fork clones the files of a GitHub project, but not any of the stars or issues of the original project.
+https://flaviocopes.com/github/
+
+    Project management
+    Along with issues, which are the place where developers get feedback from users, the GitHub interface offers other features 
+    aimed at helping project management.
+    One of those is Projects. It’s very new in the ecosystem and very rarely used, but it’s a kanban board that 
+    helps organizing issues and work that needs to be done.
+    The Wiki is intended to be used as a documentation for users. One of the most impressive usage of the Wiki I
+    saw up to now is the Go Programming Language GitHub Wiki.
+    Another popular project management aid is milestones. Part of the issues page, you can assign issues to specific 
+    milestones, which could be release targets.
+    Speaking of releases, GitHub enhances the Git tag functionality by introducing releases.
+    A Git tag is a pointer to a specific commit, and if done consistently, helps you roll back to previous version of 
+    your code without referencing specific commits.
+    A GitHub release builds on top of Git tags and represents a complete release of your code, along with zip files, 
+    release notes and binary assets that might represent a fully working version of your code end product.
+    While a Git tag can be created programmatically (e.g. using the Command Line git program), creating a GitHub release 
+    is a manual process that happens through the GitHub UI. You basically tell GitHub to create a new release and tell them which
+    tag you want to apply that release to.
+https://flaviocopes.com/github/
+
+    I looked at other coders projects and found the compare changes to see what has changed from one commit to another
