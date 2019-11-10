@@ -1,0 +1,25 @@
+I watched a https://www.youtube.com/watch?v=govmXpDGLpo to understand tags in github.
+  git tag = listing tags
+  git tag -a v1.4 = tagging
+  git tag -a v1.4 -m "my version 1.4" = documented tagging
+  $ git push origin v1.4 = pushing to remote
+  git checkout v1.4 = checking out tag
+  $ git tag -d v1 = deleting tag
+  git push --delete origin v1.4 = delete remote tag
+
+I also learned about git flow and release branches, feture branches, hotfix branches, master brach and developement branch.
+I how know what continuous integration and continuous depleoment means but I think I'll look more into it and its features later.
+I also watched https://www.youtube.com/watch?v=CRlGDDprdOQ to firgure out the difference between rebase and merge,
+but now I know that rebase isn't even viable in public repositories so kinda wast of 20 minuets
+
+I relized maybe I didn't undertstand merging as much as I thought I did, so I watrched https://www.youtube.com/watch?v=FyAAIHHClqI
+and it was super indepth but now I just have more questions, like what really are servers and way more things he mentioned
+Things I did learn are:
+  fast forward merge
+  three way merge
+  merge commit
+  merge conflicts - and how to fix it
+  git graph
+  detatched head state
+  git stash
+ 
