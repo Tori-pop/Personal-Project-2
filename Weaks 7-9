@@ -9,6 +9,26 @@ I watched a https://www.youtube.com/watch?v=govmXpDGLpo to understand tags in gi
 
 I also learned about git flow and release branches, feture branches, hotfix branches, master brach and developement branch.
 I how know what continuous integration and continuous depleoment means but I think I'll look more into it and its features later.
+Continuous integration 
+   Continuous integration (CI) is a software practice that requires frequently committing code to a shared repository. 
+    Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug when finding the
+    source of an error. Frequent code updates also make it easier to merge changes from different members of a 
+    software development team. This is great for developers, who can spend more time writing code and less
+    time debugging errors or resolving merge conflicts. When you commit code to your repository, you can 
+    continuously build and test the code to make sure that the commit doesn't introduce errors. Your tests can 
+    include code linters (which check style formatting), security checks, code coverage, functional tests, and other custom checks.
+ -https://help.github.com/en/actions/automating-your-workflow-with-github-actions/about-continuous-integration
+Continuous Deployment
+    Continuous Deployment is a software development practice in which every code change goes through the entire 
+    pipeline and is put into production, automatically, resulting in many production deployments every day.
+Continuous Delivery  
+    Continuous Delivery (CD) is a software development practice in which continuous integration, automated testing, 
+    and automated deployment capabilities allow high-quality software to be developed and deployed rapidly, 
+    reliably and repeatedly with minimal manual overhead.
+    Building and testing your code requires a server. You can build and test updates locally before pushing code 
+    to a repository, or you can use a CI server that checks for new code commits in a repository.
+ -https://www.cloudbees.com/resources/continuous-delivery-101/continuous-deployment
+ 
 I also watched https://www.youtube.com/watch?v=CRlGDDprdOQ to firgure out the difference between rebase and merge,
 but now I know that rebase isn't even viable in public repositories so kinda wast of 20 minuets
 
@@ -23,3 +43,11 @@ Things I did learn are:
   detatched head state
   git stash
  
+Webhooks - they provide a way for notifications to be delivered to an external web server 
+whenever certain actions occur on a repository or organization.
+
+I was watching some podcast for github and I heared them go on and on about how annoying the notifications get and seggested Octobox,
+so now I've installeds it and spent some time gfiguring out what it's features are.
+They also have an app.
+
+
