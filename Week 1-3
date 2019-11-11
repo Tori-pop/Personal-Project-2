@@ -71,7 +71,7 @@ I now know what "clone or download" means and how to use it
      For example, if someone else adds a few commits to the master branch of origin, you can do the following to download 
      their changes and update your own local master branch:
      git checkout master      # Make sure you're on the right branch.
-     git fetch                # Download any new info from origin.
+     git fetch                # Download any new info from origin..
      git merge origin/master  # Merge the 'origin/master' branch into your current branch.
      The name origin/master here literally means the origin/master checkpoint on your computer. Git uses this
      notation to differentiate branches of the same name (e.g. master) located in different places (e.g. your own 
