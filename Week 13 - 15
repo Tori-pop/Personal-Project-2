@@ -1,1 +1,162 @@
+https://www.atlassian.com/git/tutorials has a advanced seccion and this is an exploration of that secion
+  Subtrees
+        definition = it subtree lets you nest one repository inside another as a sub-directory.
+                     It is one of several ways Git projects can manage project dependencies.
+        Pros = Management of a simple workflow is easy.
+               Older version of Git are supported (even older than v1.5.2).
+               The sub-project’s code is available right after the clone of the super project is done.
+               git subtree does not require users of your repository to learn anything new. They can ignore the fact that you are using git subtree to manage dependencies.
+               git subtree does not add new metadata files like git submodule does (i.e., .gitmodule).
+               Contents of the module can be modified without having a separate repository copy of the dependency somewhere else.
+        Cons = You must learn about a new merge strategy (i.e.git subtree).
+               Contributing code back upstream for the sub-projects is slightly more complicated.
+               The responsibility of not mixing super and sub-project code in commits lies with you.
+
+  Git Reset vs Revert vs Checkout reference
+    git reset-Commit-level-Discard commits in a private branch or throw away uncommited changes
+    git reset-File-level-Unstage a file
+    git checkout-Commit-level-Switch between branches or inspect old snapshots
+    git checkout-File-level-Discard changes in the working directory
+    git revert-Commit-level-Undo commits in a public branch
+    git revert-File-level-(N/A)
+
+  Commit Level Operations
+    The parameters that you pass to git reset and git checkout determine their scope. When you don’t 
+    include a file path as a parameter, they operate on whole commits. hat’s what we’ll be exploring 
+    in this section. Note that git revert has no file-level counterpart.
+
+  Reset A Specific Commit
+    On the commit-level, resetting is a way to move the tip of a branch to a different commit. This can be used to remove commits 
+    from the current branch. For example,
+    the following command moves the hotfix branch backwards by two commits.
+        git checkout hotfix
+        git reset HEAD~2
+    The two commits that were on the end of hotfix are now dangling, or orphaned commits. This means they will be deleted the next
+    time Git performs a garbage collection. In other words, you’re saying that you want to throw away these commits. 
+    
+  Hashes
+    The most direct way to reference a commit is via its SHA-1 hash. This acts as the unique ID for each commit.
+    You can find the hash of all your commits in the git log output.
+        commit 0c708fdec272bc4446c6cabea4f0022c2b616eba
+        Author: Mary Johnson <mary@example.com>
+        Date: Wed Jul 9 16:37:42 2014 -0500
+        Some commit message
+    When passing the commit to other Git commands, you only need to specify enough characters to uniquely 
+    identify the commit. For example, you can inspect the above commit with git show by running the following command:
+        git show 0c708f
+    It’s sometimes necessary to resolve a branch, tag, or another indirect reference into the corresponding 
+    commit hash. For this, you can use the git rev-parse command. The following returns the hash of the commit 
+    pointed to by the master branch:
+        git rev-parse master
+    This is particularly useful when writing custom scripts that accept a commit reference. Instead of parsing
+    the commit reference manually, you can let git rev-parse normalize the input for you.
+    
+  Refs
+      A ref is an indirect way of referring to a commit. You can think of it as a user-friendly alias
+      for a commit hash. This is Git’s internal mechanism of representing branches and tags.
+      Refs are stored as normal text files in the .git/refs directory, where .git is usually called .git. 
+      To explore the refs in one of your repositories, navigate to .git/refs. You should see the following structure,
+      but it will contain different files depending on what branches, tags, and remotes you have in your repo:
+          .git/refs/
+          heads/
+          master
+          some-feature
+          remotes/
+          origin/
+          master
+          tags/
+          v0.9
+      The heads directory defines all of the local branches in your repository. Each filename matches the name of 
+      the corresponding branch, and inside the file you’ll find a commit hash. This commit hash is the location of th
+      e tip of the branch. To verify this, try running the following two commands from the root of the Git repository:
+          # Output the contents of `refs/heads/master` file:
+          cat .git/refs/heads/master
+          # Inspect the commit at the tip of the `master` branch:
+          git log -1 master
+    The commit hash returned by the cat command should match the commit ID displayed by git log.
+    To change the location of the master branch, all Git has to do is change the contents of the
+    refs/heads/master file. Similarly, creating a new branch is simply a matter of writing a commit hash to
+    a new file. This is part of the reason why Git branches are so lightweight compared to SVN.
+    The tags directory works the exact same way, but it contains tags instead of branches. The remotes
+    directory lists all remote repositories that you created with git remote as separate subdirectories.
+    Inside each one, you’ll find all the remote branches that have been fetched into your repository.
+
+  Specifying Refs
+     When passing a ref to a Git command, you can either define the full name of the ref,
+     or use a short name and let Git search for a matching ref. You should already be familiar 
+     with short names for refs, as this is what you’re using each time you refer to a branch by name.
+        git show some-feature
+    The some-feature argument in the above command is actually a short name for the branch. Git resolves 
+    this to refs/heads/some-feature before using it. You can also specify the full ref on the command line, like so:
+          git show refs/heads/some-feature
+    This avoids any ambiguity regarding the location of the ref. This is necessary, for instance, if you had
+    both a tag and a branch called some-feature. However, if you’re using proper naming conventions, ambiguity
+    between tags and branches shouldn’t generally be a problem.
+
+  Packed Refs
+      For large repositories, Git will periodically perform a garbage collection to remove unnecessary objects 
+      and compress refs into a single file for more efficient performance. You can force this compression with 
+      the garbage collection command:
+          git gc
+    This moves all of the individual branch and tag files in the refs folder into a single file called packed-refs 
+    located in the top of the .git directory. If you open up this file, you’ll find a mapping of commit hashes to refs:
+          00f54250cf4e549fdfcafe2cf9a2c90bc3800285 refs/heads/feature
+          0e25143693cfe9d5c2e83944bbaf6d3c4505eb17 refs/heads/master
+          bb883e4c91c870b5fed88fd36696e752fb6cf8e6 refs/tags/v0.9
+    On the outside, normal Git functionality won’t be affected in any way. But, if you’re wondering why your
+    .git/refs folder is empty, this is where the refs went.
+    
+  Git Cherry Pick
+      git cherry-pick is a powerful command that enables arbitrary Git commits to be picked by reference and
+      appended to the current working HEAD. Cherry picking is the act of picking a commit from a branch and 
+      applying it to another. git cherry-pick can be useful for undoing changes. For example, say a commit 
+      is accidently made to the wrong branch. You can switch to the correct branch and cherry-pick the commit
+      to where it should belong.
+      
+  Git Prune
+      The git prune command is an internal housekeeping utility that cleans up unreachable or "orphaned"
+      Git objects. Unreachable objects are those that are inaccessible by any refs. Any commit that cannot 
+      be accessed through a branch or tag is considered unreachable. git prune is generally not executed directly. 
+      Prune is considered a garbage collection command and is a child command of the git gc command.
+      
+How to store dotfiles by https://www.atlassian.com/git/tutorials/dotfiles
+
+Two categories of big repositories
+    If you think about it there are broadly two major reasons for repositories growing massive:
+    They accumulate a very very long history (the project grows over a very long period of time and the baggage accumulates)
+    They include huge binary assets that need to be tracked and paired  together with code.
+    …or it could be both.
+    Sometimes the second type of problem is compounded by the fact that old, deprecated binary artifacts are still
+    stored in the repository. But there’s a moderately easy – if annoying – fix for that (see below).
+    The techniques and workarounds for each scenario are different, though sometimes complementary. So I’ll cover them separately.
+Cloning repositories with a very long history
+    Even though threshold for a qualifying a repository as “massive” is pretty high, they’re still a pain to clone. 
+    And you can’t always avoid long histories. Some repos have to be kept in tact for legal or regulatory reasons.
+Simple solution: git shallow clone
+    The first solution to a fast clone and saving developer’s and system’s time and disk space is to copy only recent 
+    revisions. Git’s shallow clone option allows you to pull down only the latest n commits of the repo’s history.
+    How do you do it? Just use the –depth option. For example:
+    git clone --depth [depth] [remote-url] 
+    Imagine you accumulated ten or more years of project history in your repository. For example, we migrated Jira 
+    (an 11 year-old code base) to Git. The time savings for repos like this can add up and be very noticeable.
+    The full clone of Jira is 677MB, with the working directory being another 320MB, made up of more than 47,000+ commits.
+    A shallow clone of the repo takes 29.5 seconds, compared to 4 minutes 24 seconds for a full clone with all the history.
+    The benefit grows proportionately to how many binary assets your project has swallowed over time.
+    Tip: Build systems connected to your Git repo benefit from shallow clones, too!
+    Shallow clones used to be somewhat impaired citizens of the Git world as some operations were barely supported.
+    But recent versions (1.9 and above) have improved the situation greatly, and you can properly pull and push to
+    repositories even from a shallow clone now.
+    
+  git stash, which makes a temporary, local save of your code
+  git reset, which lets you tidy up your code before doing a commit
+  git bisect, a function that allows you to hunt out bad commits
+  git squash, which allows you to combine your commits
+
+
+
+
+
+
+
+
 
